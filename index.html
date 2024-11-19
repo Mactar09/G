@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigateur Web avec Recherche</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .browser {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .address-bar, .search-bar {
+            display: flex;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
+        }
+        .address-bar input, .search-bar input {
+            flex: 1;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .address-bar button, .search-bar button {
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+        iframe {
+            flex: 1;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser">
+        <div class="address-bar">
+            <input type="text" id="url" placeholder="Entrez l'URL ici">
+            <button onclick="loadPage()">Aller</button>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Rechercher sur le site">
+            <button onclick="searchSite()">Rechercher</button>
+        </div>
+        <iframe id="browser-frame" src="https://www.example.com"></iframe>
+    </div>
+    <script>
+        function loadPage() {
+            const urlInput = document.getElementById('url');
+            const iframe = document.getElementById('browser-frame');
+            let url = urlInput.value;
+
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'http://' + url;
+            }
+
+            iframe.src = url;
+        }
+
+        function searchSite() {
+            const searchInput = document.getElementById('search');
+            const iframe = document.getElementById('browser-frame');
+            const query = searchInput.value;
+            const currentUrl = iframe.src;
+
+            iframe.src = currentUrl + '?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>
